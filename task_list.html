@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        a[href*="task_create"] {
+            display: block;
+            width: fit-content;
+            margin: 0 auto 30px auto;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        a[href*="task_create"]:hover {
+            background-color: #0056b3;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        li {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-left: 5px solid #007bff;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        li strong {
+            font-size: 18px;
+            color: #007bff;
+        }
+
+        li span {
+            font-style: italic;
+            color: #28a745;
+        }
+
+        li a {
+            text-decoration: none;
+            color: #dc3545;
+            margin-left: 10px;
+        }
+
+        li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Task List</h1>
+<a href="{% url 'tasks:task_create' %}">Add New Task</a>
+
+<ul>
+    {% for task in tasks %}
+      <li>
+          <strong>{{ task.title }}</strong> - {{ task.description }} -
+          <span>{% if task.completed %}Completed{% else %}Pending{% endif %}</span>
+          - <a href="{% url 'tasks:task_update' task.id %}">Edit</a>
+          - <a href="{% url 'tasks:task_delete' task.id %}">Delete</a>
+      </li>
+    {% empty %}
+      <li>No tasks yet!</li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>
