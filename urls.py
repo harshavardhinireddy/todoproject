@@ -1,9 +1,16 @@
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from . import views
+from . views import TaskViewSet
 
-from django.contrib import admin
-from django.urls import path,include
+app_name = 'tasks'
+router = DefaultRouter()
+router.register('tasks', TaskViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('',include('tasks.urls')),
-    path('api/v1/',include('tasks.urls',namespace='v1')),
+    path('', views.task_list, name='task_list'),
+    path('create/', views.task_create, name='task_create'),
+    path('update/<int:task_id>/', views.task_update, name='task_update'),
+    path('delete/<int:task_id>/', views.task_delete, name='task_delete'),
+    path('api/', include(router.urls)),
 ]
